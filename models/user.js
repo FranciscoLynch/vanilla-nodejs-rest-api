@@ -24,8 +24,19 @@ function create(user) {
     })
 }
 
+function update(id, userData) {
+    return new Promise((resolve, _reject) => {
+
+        const index = users.findIndex((u) => u.id === id)
+        users[index] = { id, ...userData }
+        writeDataToFile('./data/users.json', users)
+        resolve(users[index])
+    })
+}
+
 module.exports = {
     findAll,
     findById,
-    create
+    create,
+    update
 }

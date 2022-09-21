@@ -33,7 +33,7 @@ async function getUser(_req, res, id) {
     }
 }
 
-// @desc POST Single User
+// @desc POST Create Single User
 // @route POST /api/users
 async function createUser(req, res) {
     try {
@@ -67,7 +67,7 @@ async function createUser(req, res) {
         const { name, username } = JSON.parse(body)
 
         const user = { name, username }
-        
+
         const newUser = await User.create(user)
 
         res.writeHead(201, { 'Content-Type': 'application/json' })
@@ -78,8 +78,37 @@ async function createUser(req, res) {
     }
 }
 
+// @desc PUT Update Single User
+// @route PUT /api/user/:id
+async function updateUser(req, res, id) {
+    try {
+
+        const user = await User.findById(id)
+
+        if (!user) {
+            res.writeHead(404, { 'Content-Type': 'application/json' })
+            res.end(JSON.stringify({ msg: 'Route not found' }))
+        } else {
+            const body = await getPostData(req)
+
+            const { name, username } = JSON.parse(body)
+
+            const userData = { name: name || user.name, username: username || user.username }
+
+            const updUser = await User.update(id, userData)
+
+            res.writeHead(200, { 'Content-Type': 'application/json' })
+            return res.end(JSON.stringify(updUser))
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     getUsers,
     getUser,
-    createUser
+    createUser,
+    updateUser
 }
