@@ -3,20 +3,20 @@ const { v4: uuidv4 } = require('uuid')
 const { writeDataToFile } = require('../utils')
 
 function findAll() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
         resolve(users)
     })
 }
 
 function findById(id) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
         const user = users.find((u) => u.id === id)
         resolve(user)
     })
 }
 
 function create(user) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
         const newUser = { id: uuidv4(), ...user }
         users.push(newUser)
         writeDataToFile('./data/users.json', users)

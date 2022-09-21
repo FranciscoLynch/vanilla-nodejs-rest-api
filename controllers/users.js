@@ -3,7 +3,7 @@ const { getPostData } = require('../utils')
 
 // @desc GET All Users
 // @route GET /api/users
-async function getUsers(req, res) {
+async function getUsers(_req, res) {
     try {
         const users = await User.findAll()
 
@@ -16,7 +16,7 @@ async function getUsers(req, res) {
 
 // @desc GET Single User
 // @route GET /api/user/:id
-async function getUser(req, res, id) {
+async function getUser(_req, res, id) {
     try {
 
         const user = await User.findById(id)
