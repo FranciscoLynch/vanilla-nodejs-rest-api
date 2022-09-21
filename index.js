@@ -17,7 +17,7 @@ const server = http.createServer((req, res) => {
     }
 })
 
-const hostname = '127.0.0.1'
-const port = 4000
+const hostname = process.env.HOSTNAME || '127.0.0.1'
+const port = process.env.PORT || 4000
 
 server.listen(port, hostname, () => console.log(`Server running at http://${hostname}:${port}`))
