@@ -1,5 +1,5 @@
 const http = require('http')
-const { getUsers, getUser, createUser, updateUser } = require('./controllers/users')
+const { getUsers, getUser, createUser, updateUser, removeUser } = require('./controllers/users')
 
 
 const server = http.createServer((req, res) => {
@@ -13,8 +13,10 @@ const server = http.createServer((req, res) => {
     } else if (req.url.match(/\/api\/user\/([0-9]+)/) && req.method === 'PUT') {
         const id = req.url.split('/')[3]
         updateUser(req, res, parseInt(id))
-    }
-    else {
+    } else if (req.url.match(/\/api\/user\/([0-9]+)/) && req.method === 'DELETE') {
+        const id = req.url.split('/')[3]
+        removeUser(req, res, parseInt(id))
+    } else {
         res.writeHead(404, { 'Content-Type': 'application/json' })
         res.end(JSON.stringify({ msg: 'Route not found' }))
     }
