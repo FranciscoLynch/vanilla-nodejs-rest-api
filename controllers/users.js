@@ -14,7 +14,6 @@ async function getUsers(req, res) {
     }
 }
 
-
 // @desc GET Single User
 // @route GET /api/user/:id
 async function getUser(req, res, id) {
@@ -34,7 +33,47 @@ async function getUser(req, res, id) {
     }
 }
 
+// @desc POST Single User
+// @route POST /api/users
+async function createUser(req, res) {
+    try {
+
+        const user =
+        {
+            name: "John Doe",
+            username: "Johnny",
+            email: "doejohn@gmail.com",
+            address: {
+                street: "Kulas Light",
+                suite: "Apt. 559",
+                city: "Gwenborough",
+                zipcode: "92998-3874",
+                geo: {
+                    lat: "-37.3159",
+                    lng: "81.1496"
+                }
+            },
+            phone: "1-773-721-9999 x56442",
+            website: "hildegard.org",
+            company: {
+                name: "Romaguera-Crona",
+                catchPhrase: "Multi-layered client-server neural-net",
+                bs: "harness real-time e-markets"
+            }
+        }
+
+        const newUser = await User.create(user)
+
+        res.writeHead(201, { 'Content-Type': 'application/json' })
+        return res.end(JSON.stringify(newUser))
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     getUsers,
-    getUser
+    getUser,
+    createUser
 }
