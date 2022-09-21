@@ -1,5 +1,5 @@
 const User = require('../models/user')
-
+const { getPostData } = require('../utils')
 
 // @desc GET All Users
 // @route GET /api/users
@@ -38,30 +38,36 @@ async function getUser(req, res, id) {
 async function createUser(req, res) {
     try {
 
-        const user =
-        {
-            name: "John Doe",
-            username: "Johnny",
-            email: "doejohn@gmail.com",
-            address: {
-                street: "Kulas Light",
-                suite: "Apt. 559",
-                city: "Gwenborough",
-                zipcode: "92998-3874",
-                geo: {
-                    lat: "-37.3159",
-                    lng: "81.1496"
-                }
-            },
-            phone: "1-773-721-9999 x56442",
-            website: "hildegard.org",
-            company: {
-                name: "Romaguera-Crona",
-                catchPhrase: "Multi-layered client-server neural-net",
-                bs: "harness real-time e-markets"
-            }
-        }
+        /*  const user =
+         {
+             name: "John Doe",
+             username: "Johnny",
+             email: "doejohn@gmail.com",
+             address: {
+                 street: "Kulas Light",
+                 suite: "Apt. 559",
+                 city: "Gwenborough",
+                 zipcode: "92998-3874",
+                 geo: {
+                     lat: "-37.3159",
+                     lng: "81.1496"
+                 }
+             },
+             phone: "1-773-721-9999 x56442",
+             website: "hildegard.org",
+             company: {
+                 name: "Romaguera-Crona",
+                 catchPhrase: "Multi-layered client-server neural-net",
+                 bs: "harness real-time e-markets"
+             }
+         } */
 
+        const body = await getPostData(req)
+
+        const { name, username } = JSON.parse(body)
+
+        const user = { name, username }
+        
         const newUser = await User.create(user)
 
         res.writeHead(201, { 'Content-Type': 'application/json' })
